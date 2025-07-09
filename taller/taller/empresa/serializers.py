@@ -12,12 +12,17 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ['url', 'name']
         
-class EdificioSerializer(serializers.ModelSerializer):
+class EdificioSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Edificio
-        fields = '__all__'
+        fields = ['url', 'nombre', 'direccion', 'ciudad', 'tipo']
         
-class DepartamentoSerializer(serializers.ModelSerializer):
+class DepartamentoSerializer(serializers.HyperlinkedModelSerializer):
+    edificio = serializers.HyperlinkedRelatedField(
+        view_name='edificio-detail',
+        queryset=Edificio.objects.all()
+    )
+    
     class Meta:
         model = Departamento
-        fields = '__all__'
+        fields = ['url', 'nombre_completo', 'costo_departamento', 'numero_cuartos', 'edificio']

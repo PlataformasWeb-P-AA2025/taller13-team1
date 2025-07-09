@@ -3,17 +3,21 @@ from django.db import models
 # Create your models here.
 class Edificio(models.Model):
     """
-    Modelo que representa un edificio de una empresa.
+    Modelo que representa un edificio.
     """
     
+    TIPO_CHOICES = [
+        ('residencial', 'Residencial'),
+        ('comercial', 'Comercial'),
+    ]
+    
     nombre = models.CharField(max_length=100)
-    direccion = models.CharField(max_length=200)
+    direccion = models.CharField(max_length=255)
     ciudad = models.CharField(max_length=100)
-    tipo = models.CharField(max_length=50)
+    tipo = models.CharField(max_length=20, choices=TIPO_CHOICES)
     
     def __str__(self):
-        return f"{self.nombre} - {self.ciudad} ({self.tipo})"
-    
+        return f"{self.nombre} - {self.ciudad}"
 
 class Departamento(models.Model):
     """
@@ -27,4 +31,3 @@ class Departamento(models.Model):
     
     def __str__(self):
         return f"{self.nombre_completo} - {self.edificio.nombre}"
-    

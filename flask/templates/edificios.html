@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head><title>Edificios</title></head>
+<body>
+  <h1>Edificios ({{ numero_edificios }})</h1>
+  <ul>
+    {% for e in edificios %}
+      <li>{{ e.nombre }} - {{ e.ciudad }}</li>
+    {% else %}
+      <li>No hay edificios</li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

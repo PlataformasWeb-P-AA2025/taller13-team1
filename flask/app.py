@@ -1,16 +1,14 @@
-
 from flask import Flask, render_template, request, redirect
 import requests
 import json
 
 app = Flask(__name__)
-
 API_URL = "http://127.0.0.1:8000/api/"
-TOKEN = "c77618c0beaece0b61a52db8a3dc16095fdf67b7"
+TOKEN = "75fb6a21ae8e4795ccc3c3f502eebc2731337de7"
 HEADERS = {"Authorization": f"Token {TOKEN}"}
 
-@app.route('/')
-def index():
+@app.route("/")
+def hello_world():
     return render_template('index.html')
 
 @app.route('/edificios')
@@ -23,41 +21,32 @@ def listar_edificios():
 
 @app.route('/departamentos')
 def listar_departamentos():
-    response = requests.get(f"{API_URL}departamentos/", headers=HEADERS)
-    data = response.json()
-    departamentos = data['results']
-    numero_departamentos = data['count']
+    r = requests.get(f"{API_URL}departamentos/", headers=HEADERS)
+    departamentos = json.loads(r.content)['results']
+    numero_departamentos = json.loads(r.content)['count']
     return render_template('departamentos.html', departamentos=departamentos, numero_departamentos=numero_departamentos)
 
-@app.route('/crear_edificio', methods=['GET', 'POST'])
+@app.route('/crear-edificio', methods=['POST'])
 def crear_edificio():
-    if request.method == 'POST':
-        data = {
-            'nombre': request.form['nombre'],
-            'direccion': request.form['direccion'],
-            'ciudad': request.form['ciudad'],
-            'tipo': request.form['tipo'],
-        }
-        r = requests.post(f"{API_URL}edificios/", headers=HEADERS, data=data)
-        print("POST /edificios:", r.status_code, r.text)
-        return redirect('/edificios')
-    return render_template('crear_edificio.html')
+    data = {
+        "nombre": request.form['nombre'],
+        "direccion": request.form['direccion'],
+        "ciudad": request.form['ciudad'],
+        "tipo": request.form['tipo']
+    }
+    requests.post(f"{API_URL}edificios/", headers=HEADERS, data=data)
+    return redirect('/edificios')
 
-@app.route('/crear_departamento', methods=['GET', 'POST'])
+@app.route('/crear-departamento', methods=['POST'])
 def crear_departamento():
-    r = requests.get(f"{API_URL}edificios/", headers=HEADERS)
-    edificios = r.json()['results']
-    if request.method == 'POST':
-        data = {
-            'nombre_completo': request.form['nombre_completo'],
-            'costo_departamento': request.form['costo_departamento'],
-            'numero_cuartos': request.form['numero_cuartos'],
-            'edificio': request.form['edificio'],  # Debe ser URL completa
-        }
-        r = requests.post(f"{API_URL}departamentos/", headers=HEADERS, data=data)
-        print("POST /departamentos:", r.status_code, r.text)
-        return redirect('/departamentos')
-    return render_template('crear_departamento.html', edificios=edificios)
+    data = {
+        "nombre_completo": request.form['nombre_completo'],
+        "costo_departamento": request.form['costo'],
+        "numero_cuartos": request.form['cuartos'],
+        "edificio": request.form['edificio_url']  # Debe ser la URL completa
+    }
+    requests.post(f"{API_URL}departamentos/", headers=HEADERS, data=data)
+    return redirect('/departamentos')
 
 if __name__ == '__main__':
     app.run(debug=True)

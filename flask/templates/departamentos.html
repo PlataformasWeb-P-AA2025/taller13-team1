@@ -2,7 +2,7 @@
 <a href="/crear_departamento">Crear nuevo departamento</a>
 <ul>
   {% for d in departamentos %}
-    <li>{{ d.nombre_completo }} - ${{ d.costo_departamento }} - Cuartos: {{ d.numero_cuartos }} - Edificio ID: {{ d.edificio }}</li>
+    <li>{{ d.nombre_completo }} - ${{ d.costo_departamento }} - Cuartos: {{ d.numero_cuartos }} - Edificio: {{ d.edificio.nombre }}</li>
   {% endfor %}
 </ul>
 <a href="/">Inicio</a>

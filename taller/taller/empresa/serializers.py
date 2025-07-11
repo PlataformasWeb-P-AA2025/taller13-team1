@@ -7,6 +7,7 @@ class EdificioSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class DepartamentoSerializer(serializers.ModelSerializer):
+    edificio = EdificioSerializer()
     class Meta:
         model = Departamento
         fields = '__all__'

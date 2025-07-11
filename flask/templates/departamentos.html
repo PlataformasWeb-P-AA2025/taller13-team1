@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head><title>Departamentos</title></head>
-<body>
-  <h1>Departamentos ({{ numero_departamentos }})</h1>
-  <ul>
-    {% for d in departamentos %}
-      <li>{{ d.nombre_completo }} - {{ d.costo_departamento }}</li>
-    {% else %}
-      <li>No hay departamentos</li>
-    {% endfor %}
-  </ul>
-</body>
-</html>
+<h1>Departamentos</h1>
+<a href="/crear_departamento">Crear nuevo departamento</a>
+<ul>
+  {% for d in departamentos %}
+    <li>{{ d.nombre_completo }} - ${{ d.costo_departamento }} - Cuartos: {{ d.numero_cuartos }} - Edificio ID: {{ d.edificio }}</li>
+  {% endfor %}
+</ul>
+<a href="/">Inicio</a>

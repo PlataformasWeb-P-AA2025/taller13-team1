@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head><title>Edificios</title></head>
-<body>
-  <h1>Edificios ({{ numero_edificios }})</h1>
-  <ul>
-    {% for e in edificios %}
-      <li>{{ e.nombre }} - {{ e.ciudad }}</li>
-    {% else %}
-      <li>No hay edificios</li>
-    {% endfor %}
-  </ul>
-</body>
-</html>
+<h1>Edificios</h1>
+<a href="/crear_edificio">Crear nuevo edificio</a>
+<ul>
+  {% for e in edificios %}
+    <li>{{ e.nombre }} - {{ e.ciudad }} - {{ e.tipo }}</li>
+  {% endfor %}
+</ul>
+<a href="/">Inicio</a>

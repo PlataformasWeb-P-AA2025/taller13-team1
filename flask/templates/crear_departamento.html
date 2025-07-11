@@ -1,0 +1,12 @@
+<h1>Crear Departamento</h1>
+<form method="post">
+  <input name="nombre_completo" placeholder="Propietario" required><br>
+  <input name="costo_departamento" type="number" step="0.01" placeholder="Costo" required><br>
+  <input name="numero_cuartos" type="number" placeholder="Número de cuartos" required><br>
+  <select name="edificio" required>
+    {% for e in edificios %}
+      <option value="{{ e.id }}">{{ e.nombre }}</option>
+    {% endfor %}
+  </select><br>
+  <button type="submit">Crear</button>
+</form>
